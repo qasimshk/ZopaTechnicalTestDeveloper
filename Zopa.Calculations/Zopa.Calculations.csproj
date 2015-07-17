@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\_shared\CA.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,8 +44,11 @@
     <Compile Include="..\_shared\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quotes\IQuoteCalculator.cs" />
+    <Compile Include="Quotes\Offer.cs" />
+    <Compile Include="Quotes\QuoteCalculationResult.cs" />
+    <Compile Include="Quotes\QuoteCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
