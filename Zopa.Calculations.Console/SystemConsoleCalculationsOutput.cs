@@ -18,5 +18,10 @@ namespace Zopa.Calculations.Console
 			Console.WriteLine($"Monthly repayment: {result.MonthlyRepayment:c2}");
 			Console.WriteLine($"Total repayment: {result.TotalRepayment:c2}");
 		}
+
+		public void InsufficiendOffers()
+		{
+			Console.WriteLine("It is not possible to provide a quote now. Please try it later.");
+		}
 	}
 }

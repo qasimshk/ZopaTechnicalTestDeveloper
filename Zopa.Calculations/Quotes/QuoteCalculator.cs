@@ -15,6 +15,11 @@
 				throw new ArgumentNullException(nameof(offers));
 			}
 
+			if (offers.Sum(x => x.CashAvailable) < loanAmount)
+			{
+				return null;
+			}
+
 			var totalRepayment = CalculateTotalToPay(loanAmount, offers);
 
 			var quote = (totalRepayment - loanAmount) / loanAmount;

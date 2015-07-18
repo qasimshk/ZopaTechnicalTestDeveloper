@@ -5,5 +5,7 @@ namespace Zopa.Calculations.Console
 	public interface ICalculationsOutput
 	{
 		void OutputQuoteCalculationResult(QuoteCalculationResult result);
+
+		void InsufficiendOffers();
 	}
 }

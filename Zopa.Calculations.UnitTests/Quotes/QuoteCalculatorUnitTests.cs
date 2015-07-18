@@ -27,7 +27,7 @@ namespace Zopa.Calculations.UnitTest.Quotes
 		{
 			var calculator = new QuoteCalculator() as IQuoteCalculator;
 
-			var result = calculator.GetQuote(1000, new List<Offer>());
+			var result = calculator.GetQuote(1000, new List<Offer> { new Offer { CashAvailable = 1000 } });
 
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1000, result.LoanAmount);
@@ -67,6 +67,16 @@ namespace Zopa.Calculations.UnitTest.Quotes
 
 			Assert.IsNotNull(result);
 			return result.TotalRepayment;
+		}
+
+		[Test]
+		public void WhenThereIsNotEnoughOffersToSatisfyTheRequestedLoanAmount_ReturnNull()
+		{
+			var calculator = new QuoteCalculator() as IQuoteCalculator;
+
+			var result = calculator.GetQuote(2000, new List<Offer> { new Offer { Rate = 0.5m, CashAvailable = 1000 } });
+
+			Assert.IsNull(result);
 		}
 
 		#region Test cases data

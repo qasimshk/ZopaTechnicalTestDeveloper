@@ -54,13 +54,21 @@ namespace Zopa.Calculations.Console
 				throw new ArgumentException("Invalid number of input parameters. At least two parameters expected.", nameof(parameters));
 			}
 
-			var offersFileName = parameters[0];
 			var loanAmount = ParseAndValidateLoanAmount(parameters[1]);
+
+			var offersFileName = parameters[0];
 			var offers = this._offersReader.ReadAll(offersFileName);
 
 			var result = this._quoteCalculator.GetQuote(loanAmount, offers);
 
-			this._calculationsOutput.OutputQuoteCalculationResult(result);
+			if (null == result)
+			{
+				this._calculationsOutput.InsufficiendOffers();
+			}
+			else
+			{
+				this._calculationsOutput.OutputQuoteCalculationResult(result);
+			}
 		}
 
 		private static int ParseAndValidateLoanAmount(string loanAmountAsString)

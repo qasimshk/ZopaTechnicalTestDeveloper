@@ -156,11 +156,38 @@ namespace Zopa.Calculations.Console.UnitTest
 		[Test]
 		public void ShouldOutputQuoteCalculationResult()
 		{
+			var quoteCalculationResult = new QuoteCalculationResult();
+
+			var offersReaderMock = new Mock<IOffersReader>();
+
+			var calculationsOutputMock = new Mock<ICalculationsOutput>();
+			calculationsOutputMock.Setup(x => x.OutputQuoteCalculationResult(It.Is<QuoteCalculationResult>(p => quoteCalculationResult.Equals(p))))
+				.Verifiable();
+
+			var quoteCalculationMock = new Mock<IQuoteCalculator>();
+			quoteCalculationMock.Setup(x => x.GetQuote(It.IsAny<int>(), It.IsAny<IList<Offer>>()))
+				.Returns(quoteCalculationResult);
+
+			var parameters = new[] { "filename", 1000.ToString() };
+
+			var calculationApp = new CalculationApp(
+				offersReaderMock.Object,
+				calculationsOutputMock.Object,
+				quoteCalculationMock.Object) as ICalculationApp;
+
+			calculationApp.Run(parameters);
+
+			calculationsOutputMock.Verify();
+		}
+
+		[Test]
+		public void WhenCalculationResultIsNull_OutputInsufficiendOffers()
+		{
 			var offersReaderMock = new Mock<IOffersReader>();
 			offersReaderMock.Setup(x => x.ReadAll(It.IsAny<string>())).Returns(new List<Offer>());
 
 			var calculationsOutputMock = new Mock<ICalculationsOutput>();
-			calculationsOutputMock.Setup(x => x.OutputQuoteCalculationResult(It.IsAny<QuoteCalculationResult>()))
+			calculationsOutputMock.Setup(x => x.InsufficiendOffers())
 				.Verifiable();
 
 			var quoteCalculationMock = new Mock<IQuoteCalculator>();
