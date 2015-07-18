@@ -46,6 +46,21 @@ namespace Zopa.Calculations.Console.UnitTest
 			calculationApp.Run(parameters);
 		}
 
+		[Test, ExpectedException(typeof(ArgumentException))]
+		public void WhenInputSecondParametersIsNotInteger_ThrowArgumentException()
+		{
+			var offersReaderMock = new Mock<IOffersReader>();
+			var calculationsOutputMock = new Mock<ICalculationsOutput>();
+			var quoteCalculationMock = new Mock<IQuoteCalculator>();
+
+			var calculationApp = new CalculationApp(
+				offersReaderMock.Object,
+				calculationsOutputMock.Object,
+				quoteCalculationMock.Object) as ICalculationApp;
+
+			calculationApp.Run(new[] { "filename", "de" });
+		}
+
 		[Test]
 		public void ShouldLoadOffersFromInputFile()
 		{
