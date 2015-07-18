@@ -22,7 +22,7 @@ namespace Zopa.Calculations.Readers
 		}
 
 		// ReSharper disable once ClassNeverInstantiated.Local
-		public class CsvRow
+		private class CsvRow
 		{
 			public string Lender { get; set; }
 

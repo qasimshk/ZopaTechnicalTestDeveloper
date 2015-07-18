@@ -35,7 +35,7 @@
 			};
 		}
 
-		private static decimal CalculateTotalToPay(int loanAmount, ICollection<Offer> offers)
+		private static decimal CalculateTotalToPay(int loanAmount, IEnumerable<Offer> offers)
 		{
 			var borrowed = 0;
 			var totalTopay = 0m;
