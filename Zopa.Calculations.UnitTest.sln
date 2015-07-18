@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BBE44F69-C780-4D69-A307-3DC81F6175C3}"
+	ProjectSection(SolutionItems) = preProject
+		_shared\CA.ruleset = _shared\CA.ruleset
+		_shared\R#.DotSettings = _shared\R#.DotSettings
+		_shared\SharedAssemblyInfo.cs = _shared\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopa.Calculations.Console", "Zopa.Calculations.Console\Zopa.Calculations.Console.csproj", "{A9C54872-80F2-471D-9474-4C2AB2CF303E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopa.Calculations.UnitTests", "Zopa.Calculations.UnitTests\Zopa.Calculations.UnitTests.csproj", "{9900A6DD-5FC5-487C-8CB3-B582C3078F12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopa.Calculations", "Zopa.Calculations\Zopa.Calculations.csproj", "{B76C835A-A474-4CEC-BA5C-73C679779229}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zopa.Calculations.Console.UnitTest", "Zopa.Calculations.Console.UnitTest\Zopa.Calculations.Console.UnitTest.csproj", "{EDAA0963-F753-4E48-8AB8-B7941FEB8B4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9C54872-80F2-471D-9474-4C2AB2CF303E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9C54872-80F2-471D-9474-4C2AB2CF303E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9C54872-80F2-471D-9474-4C2AB2CF303E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9C54872-80F2-471D-9474-4C2AB2CF303E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9900A6DD-5FC5-487C-8CB3-B582C3078F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9900A6DD-5FC5-487C-8CB3-B582C3078F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9900A6DD-5FC5-487C-8CB3-B582C3078F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9900A6DD-5FC5-487C-8CB3-B582C3078F12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B76C835A-A474-4CEC-BA5C-73C679779229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B76C835A-A474-4CEC-BA5C-73C679779229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B76C835A-A474-4CEC-BA5C-73C679779229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B76C835A-A474-4CEC-BA5C-73C679779229}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDAA0963-F753-4E48-8AB8-B7941FEB8B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDAA0963-F753-4E48-8AB8-B7941FEB8B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDAA0963-F753-4E48-8AB8-B7941FEB8B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDAA0963-F753-4E48-8AB8-B7941FEB8B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
