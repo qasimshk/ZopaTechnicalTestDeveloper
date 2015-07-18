@@ -2,6 +2,8 @@
 {
 	public class QuoteCalculationResult
 	{
+		public int LoanAmount { get; set; }
+
 		public decimal Quote { get; set; }
 
 		public decimal MonthlyRepayment { get; set; }

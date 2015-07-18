@@ -7,30 +7,30 @@
 
 	public class QuoteCalculator : IQuoteCalculator
 	{
-		private readonly IReadOnlyCollection<Offer> _offers;
+		public const int LoanLengthInMonths = 36;
 
-		#region ctors
-
-		public QuoteCalculator(IList<Offer> offers)
+		public QuoteCalculationResult GetQuote(int loanAmount, ICollection<Offer> offers)
 		{
 			if (null == offers)
 			{
 				throw new ArgumentNullException(nameof(offers));
 			}
 
-			this._offers = new ReadOnlyCollection<Offer>(offers);
-		}
+			var quote = CalculateQuote(loanAmount, offers);
 
-		#endregion
-
-		public QuoteCalculationResult GetQuote(int loanAmount)
-		{
-			var minimalRate = this._offers.Min(x => x.Rate);
+			var monthlyRepayment = loanAmount * (1 + quote) / LoanLengthInMonths;
 
 			return new QuoteCalculationResult
 			{
-				Quote = minimalRate
+				Quote = quote,
+				MonthlyRepayment = monthlyRepayment
 			};
+		}
+
+		private static decimal CalculateQuote(int loanAmount, ICollection<Offer> offers)
+		{
+			var minimalRate = offers.Min(x => x.Rate);
+			return minimalRate;
 		}
 	}
 }

@@ -1,3 +1,8 @@
+# Notes
+
+- Testing guards in ctors is not required.
+
+
 # Zopa Technical Test
 
 There is a need for a rate calculation system allowing prospective borrowers to
