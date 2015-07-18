@@ -17,8 +17,18 @@ namespace Zopa.Calculations.Readers
 		{
 			using (var reader = new CsvReader(File.OpenText(fileName)))
 			{
-				return reader.GetRecords<Offer>().ToList();
+				return reader.GetRecords<CsvRow>().Select(x => new Offer { Rate = x.Rate, CashAvailable = x.Available }).ToList();
 			}
+		}
+
+		// ReSharper disable once ClassNeverInstantiated.Local
+		public class CsvRow
+		{
+			public string Lender { get; set; }
+
+			public decimal Rate { get; set; }
+
+			public int Available { get; set; }
 		}
 	}
 }

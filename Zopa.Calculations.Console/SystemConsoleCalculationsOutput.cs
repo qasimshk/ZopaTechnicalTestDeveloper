@@ -13,10 +13,10 @@ namespace Zopa.Calculations.Console
 				throw new ArgumentNullException(nameof(result));
 			}
 
-			Console.WriteLine($"Requested amount: {result.LoanAmount:c}");
-			Console.WriteLine($"Rate: {result.Quote:P}");
-			Console.WriteLine($"Monthly repayment: {result.MonthlyRepayment:c}");
-			Console.WriteLine($"Total repayment: {result.LoanAmount:c}");
+			Console.WriteLine($"Requested amount: {result.LoanAmount:c0}");
+			Console.WriteLine($"Rate: {result.Quote:P1}");
+			Console.WriteLine($"Monthly repayment: {result.MonthlyRepayment:c2}");
+			Console.WriteLine($"Total repayment: {result.TotalRepayment:c2}");
 		}
 	}
 }

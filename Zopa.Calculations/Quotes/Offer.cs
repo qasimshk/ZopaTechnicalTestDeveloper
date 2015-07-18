@@ -4,6 +4,6 @@
 	{
 		public decimal Rate { get; set; }
 
-		public decimal CashAvailable { get; set; }
+		public int CashAvailable { get; set; }
 	}
 }

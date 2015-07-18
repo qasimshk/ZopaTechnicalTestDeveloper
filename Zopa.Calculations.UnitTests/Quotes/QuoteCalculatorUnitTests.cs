@@ -23,6 +23,17 @@ namespace Zopa.Calculations.UnitTest.Quotes
 		}
 
 		[Test]
+		public void ShouldReturnLoanAmount()
+		{
+			var calculator = new QuoteCalculator() as IQuoteCalculator;
+
+			var result = calculator.GetQuote(1000, new List<Offer>());
+
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1000, result.LoanAmount);
+		}
+
+		[Test]
 		[TestCaseSource(typeof(TestCasesRepository), nameof(TestCasesRepository.QuoteTestCases))]
 		public decimal ShouldCalculateLowestQuoteRateFromOffersForRequestedLoanAmount(int loanAmount, IList<Offer> offers)
 		{
@@ -44,6 +55,18 @@ namespace Zopa.Calculations.UnitTest.Quotes
 
 			Assert.IsNotNull(result);
 			return result.MonthlyRepayment;
+		}
+
+		[Test]
+		[TestCaseSource(typeof(TestCasesRepository), nameof(TestCasesRepository.TotalRepaymentTestCases))]
+		public decimal ShouldCalculateTotalRepaymentForRequestedLoanAmount(int loanAmount, IList<Offer> offers)
+		{
+			var calculator = new QuoteCalculator() as IQuoteCalculator;
+
+			var result = calculator.GetQuote(loanAmount, offers);
+
+			Assert.IsNotNull(result);
+			return result.TotalRepayment;
 		}
 
 		#region Test cases data
@@ -77,7 +100,26 @@ namespace Zopa.Calculations.UnitTest.Quotes
 									new Offer { Rate = 0.50m, CashAvailable = 1000 },
 									new Offer { Rate = 0.20m, CashAvailable = 500 }
 								})
-								.Returns(0.60m);
+								.Returns(0.40m);
+					yield return
+						new TestCaseData(
+							1500,
+							new List<Offer>
+								{
+									new Offer { Rate = 0.60m, CashAvailable = 1500 },
+									new Offer { Rate = 0.50m, CashAvailable = 1000 },
+									new Offer { Rate = 0.20m, CashAvailable = 500 },
+								})
+								.Returns(0.40m);
+					yield return
+						new TestCaseData(
+							1000,
+							new List<Offer>
+								{
+									new Offer { Rate = 0.50m, CashAvailable = 1000 },
+									new Offer { Rate = 0.20m, CashAvailable = 1500 },
+								})
+								.Returns(0.20m);
 				}
 			}
 
@@ -93,6 +135,21 @@ namespace Zopa.Calculations.UnitTest.Quotes
 									new Offer { Rate = 0.80m, CashAvailable = 1000 }
 								})
 								.Returns(50m);
+				}
+			}
+
+			public static IEnumerable TotalRepaymentTestCases
+			{
+				get
+				{
+					yield return
+						new TestCaseData(
+							1000,
+							new List<Offer>
+								{
+									new Offer { Rate = 0.80m, CashAvailable = 1000 }
+								})
+								.Returns(1800m);
 				}
 			}
 		}

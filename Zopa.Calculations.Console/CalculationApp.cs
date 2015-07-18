@@ -12,20 +12,14 @@ namespace Zopa.Calculations.Console
 		public const int LoanAmountMaxValue = 15000;
 		public const int LoanAmountStep = 100;
 
-		private readonly int _loanAmount;
-		private readonly ICollection<Offer> _offers;
+		private readonly IOffersReader _offersReader;
 		private readonly ICalculationsOutput _calculationsOutput;
 		private readonly IQuoteCalculator _quoteCalculator;
 
 		#region ctors
 
-		public CalculationApp(string offersFileName, int loanAmount, IOffersReader offersReader, ICalculationsOutput calculationsOutput, IQuoteCalculator quoteCalculator)
+		public CalculationApp(IOffersReader offersReader, ICalculationsOutput calculationsOutput, IQuoteCalculator quoteCalculator)
 		{
-			if (null == offersFileName)
-			{
-				throw new ArgumentNullException(nameof(offersFileName));
-			}
-
 			if (null == offersReader)
 			{
 				throw new ArgumentNullException(nameof(offersReader));
@@ -41,25 +35,43 @@ namespace Zopa.Calculations.Console
 				throw new ArgumentNullException(nameof(quoteCalculator));
 			}
 
-			ValidateLoanAmount(loanAmount);
-
-			this._offers = offersReader.ReadAll(offersFileName);
-			this._loanAmount = loanAmount;
+			this._offersReader = offersReader;
 			this._calculationsOutput = calculationsOutput;
 			this._quoteCalculator = quoteCalculator;
 		}
 
 		#endregion
 
-		public void Run()
+		public void Run(IList<string> parameters)
 		{
-			var result = this._quoteCalculator.GetQuote(this._loanAmount, this._offers);
+			if (null == parameters)
+			{
+				throw new ArgumentNullException(nameof(parameters));
+			}
+
+			if (parameters.Count < 2)
+			{
+				throw new ArgumentException("Invalid number of input parameters. At least two parameters expected.", nameof(parameters));
+			}
+
+			var offersFileName = parameters[0];
+			var loanAmount = ParseAndValidateLoanAmount(parameters[1]);
+			var offers = this._offersReader.ReadAll(offersFileName);
+
+			var result = this._quoteCalculator.GetQuote(loanAmount, offers);
 
 			this._calculationsOutput.OutputQuoteCalculationResult(result);
 		}
 
-		private static void ValidateLoanAmount(int loanAmount)
+		private static int ParseAndValidateLoanAmount(string loanAmountAsString)
 		{
+			int loanAmount;
+
+			if (!int.TryParse(loanAmountAsString, out loanAmount))
+			{
+				throw new ArgumentException("Invalid value for loan amount parameter.", nameof(loanAmount));
+			}
+
 			if (loanAmount < LoanAmountMinValue || loanAmount > LoanAmountMaxValue)
 			{
 				throw new ArgumentOutOfRangeException(nameof(loanAmount), loanAmount, $"Loan amount must be inside the interval of {LoanAmountMinValue} to {LoanAmountMaxValue}.");
@@ -69,6 +81,8 @@ namespace Zopa.Calculations.Console
 			{
 				throw new ArgumentException($"Loan amount must be dividable by {LoanAmountStep}.", nameof(loanAmount));
 			}
+
+			return loanAmount;
 		}
 	}
 }

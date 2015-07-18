@@ -7,5 +7,7 @@
 		public decimal Quote { get; set; }
 
 		public decimal MonthlyRepayment { get; set; }
+
+		public decimal TotalRepayment { get; set; }
 	}
 }

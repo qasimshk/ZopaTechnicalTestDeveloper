@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
 	using System.Linq;
 
 	public class QuoteCalculator : IQuoteCalculator
@@ -16,21 +15,39 @@
 				throw new ArgumentNullException(nameof(offers));
 			}
 
-			var quote = CalculateQuote(loanAmount, offers);
+			var totalRepayment = CalculateTotalToPay(loanAmount, offers);
+
+			var quote = (totalRepayment - loanAmount) / loanAmount;
 
 			var monthlyRepayment = loanAmount * (1 + quote) / LoanLengthInMonths;
 
 			return new QuoteCalculationResult
 			{
+				LoanAmount = loanAmount,
 				Quote = quote,
-				MonthlyRepayment = monthlyRepayment
+				MonthlyRepayment = monthlyRepayment,
+				TotalRepayment = totalRepayment
 			};
 		}
 
-		private static decimal CalculateQuote(int loanAmount, ICollection<Offer> offers)
+		private static decimal CalculateTotalToPay(int loanAmount, ICollection<Offer> offers)
 		{
-			var minimalRate = offers.Min(x => x.Rate);
-			return minimalRate;
+			var borrowed = 0;
+			var totalTopay = 0m;
+
+			foreach (var offer in offers.OrderBy(x => x.Rate))
+			{
+				var amountToBorrow = loanAmount < borrowed + offer.CashAvailable ? loanAmount - borrowed : offer.CashAvailable;
+
+				totalTopay += amountToBorrow + (amountToBorrow * offer.Rate);
+
+				if ((borrowed += amountToBorrow) >= loanAmount)
+				{
+					break;
+				}
+			}
+
+			return totalTopay;
 		}
 	}
 }
