@@ -1,6 +1,7 @@
 # Notes
 
 - Testing guards in ctors is not required.
+- Used different quote rate calculation.
 
 
 # Zopa Technical Test
